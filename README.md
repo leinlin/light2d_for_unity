@@ -1,3 +1,5 @@
 # light2d_for_unity
 
-open main.unity scene and play game. enjoy
+Open main.unity scene and play game.
+
+Enjoy
