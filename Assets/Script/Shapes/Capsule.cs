@@ -1,4 +1,4 @@
-﻿/*
+/*
                #########                       
               ############                     
               #############                    
@@ -27,24 +27,24 @@ __________#_______####_______####______________
 
                 我们的未来没有BUG              
 * ==============================================================================
-* Filename: Lighter2D.cs
-* Created:  2017/11/10 9:05:37
-* Author:   To Hard The Mind
+* Filename: Capsule
+* Created:  2017/11/12 2:02:20
+* Author:   HaYaShi ToShiTaKa
 * Purpose:  
 * ==============================================================================
 */
-using System;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
-public class Lighter2D : CSGBase {
+public class Capsule : CSGBase {
     protected override void OverRideScene() {
-        //直接用默认的
+        PictureGenerate<Capsule>.OverWriteScene(scene);
     }
     protected override Texture2D GenerateTexture() {
-        return PictureGenerate<Lighter2D>.GenLightPic();
+        return PictureGenerate<Capsule>.GenLightPic();
     }
 
-
+    static Result scene(float x, float y) {
+        Result c = new Result(SDFMethods.capsuleSDF(x, y, 0.4f, 0.4f, 0.6f, 0.6f, 0.1f), 1.0f);
+        return c;
+    }
 }

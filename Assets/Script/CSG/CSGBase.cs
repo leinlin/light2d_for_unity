@@ -1,4 +1,4 @@
-﻿/*
+/*
                #########                       
               ############                     
               #############                    
@@ -27,24 +27,26 @@ __________#_______####_______####______________
 
                 我们的未来没有BUG              
 * ==============================================================================
-* Filename: Lighter2D.cs
-* Created:  2017/11/10 9:05:37
-* Author:   To Hard The Mind
+* Filename: CSGBase
+* Created:  2017/11/12 0:55:12
+* Author:   HaYaShi ToShiTaKa
 * Purpose:  
 * ==============================================================================
 */
-using System;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
-public class Lighter2D : CSGBase {
-    protected override void OverRideScene() {
-        //直接用默认的
+public abstract class CSGBase : MonoBehaviour {
+    private void Awake() {
+        OverRideScene();
     }
-    protected override Texture2D GenerateTexture() {
-        return PictureGenerate<Lighter2D>.GenLightPic();
+    void Start() {
+        Shader s = Shader.Find("Unlit/Texture");
+        Material spriteMaterial = new Material(s);
+        Texture2D t = GenerateTexture();
+        spriteMaterial.mainTexture = t;
+
+        RenderUtil.ShowAllSprite(spriteMaterial, gameObject);
     }
-
-
+    protected abstract void OverRideScene();
+    protected abstract Texture2D GenerateTexture();
 }

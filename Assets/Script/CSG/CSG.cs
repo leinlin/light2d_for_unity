@@ -27,24 +27,28 @@ __________#_______####_______####______________
 
                 我们的未来没有BUG              
 * ==============================================================================
-* Filename: Lighter2D.cs
-* Created:  2017/11/10 9:05:37
+* Filename: CSG.cs
+* Created:  2017/11/11 13:14:13
 * Author:   To Hard The Mind
 * Purpose:  
 * ==============================================================================
 */
-using System;
-using System.Collections.Generic;
-using System.IO;
+
 using UnityEngine;
 
-public class Lighter2D : CSGBase {
+public class CSG : CSGBase {
     protected override void OverRideScene() {
-        //直接用默认的
+        PictureGenerate<CSG>.OverWriteScene(scene);
     }
     protected override Texture2D GenerateTexture() {
-        return PictureGenerate<Lighter2D>.GenLightPic();
+        return PictureGenerate<CSG>.GenLightPic();
     }
 
+    static Result scene(float x, float y) {
+        Result r1 = new Result(SDFMethods.circleSDF(x, y, 0.3f, 0.3f, 0.10f), 2.0f);
+        Result r2 = new Result(SDFMethods.circleSDF(x, y, 0.3f, 0.7f, 0.05f), 0.8f);
+        Result r3 = new Result(SDFMethods.circleSDF(x, y, 0.7f, 0.5f, 0.10f), 0.0f);
+        return SDFMethods.unionOp(SDFMethods.unionOp(r1, r2), r3);
+    }
 
 }
