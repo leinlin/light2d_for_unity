@@ -27,18 +27,29 @@ __________#_______####_______####______________
 
                 我们的未来没有BUG              
 * ==============================================================================
-* Filename: Lighter2D.cs
-* Created:  2017/11/10 9:05:37
+* Filename: CSG.cs
+* Created:  2017/11/11 13:14:13
 * Author:   To Hard The Mind
 * Purpose:  
 * ==============================================================================
 */
+
+//#define ZERO
 using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class Lighter2D : MonoBehaviour {
+public class CSG : MonoBehaviour {
+    struct Result {
+        public Result(float sd, float emissive) {
+            this.sd = sd;
+            this.emissive = emissive;
+        }
+
+        public float sd;
+        public float emissive; 
+    }
 
     #region member
     private int m_verticesCount = 4;
@@ -72,13 +83,46 @@ public class Lighter2D : MonoBehaviour {
         return sum / N;
     }
 
+    Result unionOp(Result a, Result b) {
+        return a.sd < b.sd ? a : b;
+    }
+    Result intersectOp(Result a, Result b) {
+        Result r = a.sd > b.sd ? b : a;
+        r.sd = a.sd > b.sd ? a.sd : b.sd;
+        return r;
+    }
+
+    Result subtractOp(Result a, Result b) {
+        Result r = a;
+        r.sd = (a.sd > -b.sd) ? a.sd : -b.sd;
+        return r;
+    }
+    Result scene(float x, float y) {
+    #if ZERO
+        Result r1 = new Result(circleSDF(x, y, 0.3f, 0.3f, 0.10f), 2.0f);
+        Result r2 = new Result(circleSDF(x, y, 0.3f, 0.7f, 0.05f), 0.8f);
+        Result r3 = new Result(circleSDF(x, y, 0.7f, 0.5f, 0.10f), 0.0f);
+        return unionOp(unionOp(r1, r2), r3);
+    #else
+        Result a = new Result(circleSDF(x, y, 0.4f, 0.5f, 0.20f), 1.0f);
+        Result b = new Result(circleSDF(x, y, 0.6f, 0.5f, 0.20f), 0.8f);
+        // return unionOp(a, b);
+        // return intersectOp(a, b);
+        // return subtractOp(a, b);
+        return subtractOp(b, a);
+    #endif
+
+
+    }
+
     float trace(float ox, float oy, float dx, float dy) {
         float t = 0.0f;
         for (int i = 0; i < MAX_STEP && t < MAX_DISTANCE; i++) {
-            float sd = circleSDF(ox + dx * t, oy + dy * t, 0.5f, 0.5f, 0.1f);
-            if (sd < EPSILON)
-                return 2.0f;
-            t += sd;
+            Result r = scene(ox + dx * t, oy + dy * t);
+            //float sd = circleSDF(ox + dx * t, oy + dy * t, 0.5f, 0.5f, 0.1f);
+            if (r.sd < EPSILON)
+                return r.emissive;
+            t += r.sd;
         }
         return 0.0f;
     }
@@ -91,7 +135,7 @@ public class Lighter2D : MonoBehaviour {
             for (int x = 0; x < W; x++) {
                 float bright = sample((float)x / W, (float)y / H);
                 bright = Mathf.Min(1, bright);
-                result.SetPixel(x, H - 1 - y, new Color(bright, bright, bright));
+                result.SetPixel(x, H-1-y, new Color(bright, bright, bright));
             }
         }
         result.Apply();
@@ -158,5 +202,4 @@ public class Lighter2D : MonoBehaviour {
         mesh.uv = new Vector2[] { new Vector2(0, 0), new Vector2(0, 1), new Vector2(1, 0), new Vector2(1, 1) };
     }
     #endregion
-
 }
