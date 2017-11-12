@@ -36,8 +36,8 @@ __________#_______####_______####______________
 using UnityEngine;
 
 public class Box : CSGBase {
-    protected override void OverRideScene() {
-        PictureGenerate<Box>.OverWriteScene(scene);
+    protected override void OverRidePictureGen() {
+        PictureGenerate<Box>.OverRideScene(scene);
     }
     protected override Texture2D GenerateTexture() {
         return PictureGenerate<Box>.GenLightPic();

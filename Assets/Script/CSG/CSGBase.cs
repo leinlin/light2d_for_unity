@@ -37,7 +37,7 @@ using UnityEngine;
 
 public abstract class CSGBase : MonoBehaviour {
     private void Awake() {
-        OverRideScene();
+        OverRidePictureGen();
     }
     void Start() {
         Shader s = Shader.Find("Unlit/Texture");
@@ -47,6 +47,6 @@ public abstract class CSGBase : MonoBehaviour {
 
         RenderUtil.ShowAllSprite(spriteMaterial, gameObject);
     }
-    protected abstract void OverRideScene();
+    protected abstract void OverRidePictureGen();
     protected abstract Texture2D GenerateTexture();
 }

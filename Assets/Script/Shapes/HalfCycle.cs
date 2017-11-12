@@ -36,8 +36,8 @@ __________#_______####_______####______________
 using UnityEngine;
 
 public class HalfCycle : CSGBase {
-    protected override void OverRideScene() {
-        PictureGenerate<HalfCycle>.OverWriteScene(scene);
+    protected override void OverRidePictureGen() {
+        PictureGenerate<HalfCycle>.OverRideScene(scene);
     }
     protected override Texture2D GenerateTexture() {
         return PictureGenerate<HalfCycle>.GenLightPic();

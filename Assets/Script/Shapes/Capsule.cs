@@ -36,8 +36,8 @@ __________#_______####_______####______________
 using UnityEngine;
 
 public class Capsule : CSGBase {
-    protected override void OverRideScene() {
-        PictureGenerate<Capsule>.OverWriteScene(scene);
+    protected override void OverRidePictureGen() {
+        PictureGenerate<Capsule>.OverRideScene(scene);
     }
     protected override Texture2D GenerateTexture() {
         return PictureGenerate<Capsule>.GenLightPic();

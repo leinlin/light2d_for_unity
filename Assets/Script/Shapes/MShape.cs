@@ -36,8 +36,8 @@ __________#_______####_______####______________
 using UnityEngine;
 
 public class MShape : CSGBase {
-    protected override void OverRideScene() {
-        PictureGenerate<MShape>.OverWriteScene(scene);
+    protected override void OverRidePictureGen() {
+        PictureGenerate<MShape>.OverRideScene(scene);
     }
     protected override Texture2D GenerateTexture() {
         return PictureGenerate<MShape>.GenLightPic();

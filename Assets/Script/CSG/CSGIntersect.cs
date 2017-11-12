@@ -36,8 +36,8 @@ __________#_______####_______####______________
 using UnityEngine;
 
 public class CSGIntersect : CSGBase {
-    protected override void OverRideScene() {
-        PictureGenerate<CSGIntersect>.OverWriteScene(scene);
+    protected override void OverRidePictureGen() {
+        PictureGenerate<CSGIntersect>.OverRideScene(scene);
     }
     protected override Texture2D GenerateTexture() {
         return PictureGenerate<CSGIntersect>.GenLightPic();

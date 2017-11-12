@@ -36,8 +36,8 @@ __________#_______####_______####______________
 using UnityEngine;
 
 public class Plane : CSGBase {
-    protected override void OverRideScene() {
-        PictureGenerate<Plane>.OverWriteScene(scene);
+    protected override void OverRidePictureGen() {
+        PictureGenerate<Plane>.OverRideScene(scene);
     }
     protected override Texture2D GenerateTexture() {
         return PictureGenerate<Plane>.GenLightPic();

@@ -36,8 +36,8 @@ __________#_______####_______####______________
 using UnityEngine;
 
 public class CSGInSub : CSGBase {
-    protected override void OverRideScene() {
-        PictureGenerate<CSGInSub>.OverWriteScene(scene);
+    protected override void OverRidePictureGen() {
+        PictureGenerate<CSGInSub>.OverRideScene(scene);
     }
     protected override Texture2D GenerateTexture() {
         return PictureGenerate<CSGInSub>.GenLightPic();

@@ -33,13 +33,10 @@ __________#_______####_______####______________
 * Purpose:  
 * ==============================================================================
 */
-using System;
-using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class Lighter2D : CSGBase {
-    protected override void OverRideScene() {
+    protected override void OverRidePictureGen() {
         //直接用默认的
     }
     protected override Texture2D GenerateTexture() {
