@@ -61,7 +61,9 @@ Shader "Unlit/Light_2D"
 
                 float t = 0.0f;
                 for (int i = 0; i < MAX_STEP && t < MAX_DISTANCE; i++) {
-                    float sd = circleSDF(ox + dx * t, oy + dy * t, 0.5f, 0.5f, 0.1f);
+                    float cx = sin(_Time.z) * 0.4 + 0.5;
+                    float cy = cos(_Time.z) * 0.4 + 0.5;
+                    float sd = circleSDF(ox + dx * t, oy + dy * t, cx, cy, 0.1f);
                     if (sd < EPSILON)
                         return 2.0f;
                     t += sd;
@@ -102,7 +104,8 @@ Shader "Unlit/Light_2D"
 			fixed4 frag (v2f IN) : COLOR
 			{
                 float2 pos = IN.uv;
-				return sample(pos.x, pos.y);
+                float t = sin(_Time.y);
+				return (0.5 + 1.5* t*t) * sample(pos.x, pos.y);
 			}
 			ENDCG
 		}
