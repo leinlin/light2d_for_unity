@@ -74,7 +74,7 @@ Shader "Unlit/Light_2D"
             float rand(float x) {
                 float TWO_PI = 6.28318530718f;
                 x = x * 2048 * TWO_PI + 5221;//加个不均匀的数值，防止坐落在周期之中
-                float val = cos(x);
+                float val = sin(x) + cos(x);
                 val = val * val;
                 return val;
             }
@@ -83,9 +83,9 @@ Shader "Unlit/Light_2D"
                 float TWO_PI = 6.28318530718f;
                 int N = 256;
                 float sum = 0.0f;
-
+                float r = x;
                 for (int i = 0; i < N; i++) {
-                    float r = rand(x);
+                    r = rand(r);
                     float a = TWO_PI * (i + r) / N;
                     sum += trace(x, y, cos(a), sin(a));
                 }
@@ -105,7 +105,7 @@ Shader "Unlit/Light_2D"
 			{
                 float2 pos = IN.uv;
                 float t = sin(_Time.y);
-				return (0.5 + 1.5* t*t) * sample(pos.x, pos.y);
+				return sample(pos.x, pos.y) * (0.5 + 1.5* t*t);
 			}
 			ENDCG
 		}
